@@ -2,7 +2,7 @@ from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from .. import schemas, database, models, oauth2  
 
 router = APIRouter(
-    prefix="/api/vi/vote",
+    prefix="/api/v1/vote",
     tags=["Vote"]
 )
 
