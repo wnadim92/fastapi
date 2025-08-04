@@ -24,12 +24,13 @@ def latest_post(db: Session = Depends(get_db), current_user: int = Depends(oauth
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No posts found")
     return post
 
-@router.get("/{id}", response_model=schemas.Post)
+@router.get("/{id}", response_model=schemas.PostOut)
 def get_post(id: int, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    post = db.query(models.Post).filter(models.Post.id == id).first() 
-    if not post:
+    result = db.query(models.Post, func.count(models.Vote.post_id).label("vote")).join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.id == id).first() 
+    if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} not found")        
-    return post
+    post, votes = result
+    return {"Post": post, "votes": votes}
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post,)
 def create_post(post: schemas.PostCreate, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
