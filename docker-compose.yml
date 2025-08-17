@@ -4,3 +4,24 @@ services:
         build: .
         ports:
             - 8000:8000    
+        environment:
+            - database_hostname=db
+            - database_port=5432
+            - database_name=fastapi
+            - database_username=postgres
+            - database_password=password123
+            - secret_key=f3b991332f74e84303c7d83449647b2b74f373a865a0b7a2cc0d8e3d0d4837b1
+            - algorithm=HS256
+            - access_token_expire_minutes=30
+
+    db:
+        image: postgres:latest
+        volumes:
+            - db_data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_DB=fastapi
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=password123
+
+volumes:
+    db_data:
