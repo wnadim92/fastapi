@@ -32,7 +32,7 @@ def test_root():
     assert res.status_code == 200
 
 def test_create_user():
-    res = client.post("/api/v1/users/", json={"email": "sanjeev2@gmail.com", "password": "password123"})
+    res = client.post("/api/v1/users/", json={"email": "sam@mydomain.com", "password": "password123"})
     new_user = schemas.UserOut(**res.json())
-    assert new_user.email == "sanjeev2@gmail.com"
+    assert new_user.email == "sam@mydomain.com"
     assert res.status_code == 201
