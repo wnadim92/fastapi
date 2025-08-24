@@ -46,3 +46,8 @@ def test_deposit(bank_account):
 def test_collect_interest(bank_account):
     bank_account.collect_interest()
     assert round(bank_account.balance, 8) == 55
+
+def test_bank_transaction(zero_bank_account):
+    zero_bank_account.deposit(200)
+    zero_bank_account.withdraw(100)
+    assert zero_bank_account.balance == 100
