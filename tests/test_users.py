@@ -7,6 +7,7 @@ from app import schemas
 from dotenv import load_dotenv
 import os
 from app.config import settings
+from app.database import get_db
  
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}"
@@ -16,12 +17,14 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 Base = declarative_base()
 
-def get_db():
+def override_get_db():
     db = TestingSessionLocal()
     try:
         yield db
     finally:
         db.close()
+
+app.dependency_overrides[get_db] = override_get_db
 
 client = TestClient(app)
 
