@@ -92,3 +92,6 @@ jobs:
     steps:
       - name: Deploy to Container Service
         run: echo "Deplying to Container Service"
+
+      - name: Placeholder for deployment step
+        run: echo "--- IGNORE ---"
