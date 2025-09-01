@@ -90,5 +90,5 @@ jobs:
     needs: [build]
 
     steps:
-      - name: Testing print
-        run: echo "Placeholder for deployment step"
+      - name: Deploy to Container Service
+        run: echo "Deplying to Container Service"
