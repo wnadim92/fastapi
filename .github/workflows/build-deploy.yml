@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  job1:
+  build:
     environment:
       name: testing
     env:
